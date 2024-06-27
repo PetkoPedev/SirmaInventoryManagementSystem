@@ -13,5 +13,4 @@ public class FragileItem extends InventoryItem{
     public double setWeight(double weight) {
         return this.weight = weight;
     }
-    
 }
