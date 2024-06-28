@@ -26,7 +26,19 @@ public class IOInventoryFile {
                 boolean breakable = Boolean.parseBoolean(parts[4]);
                 boolean perishable = Boolean.parseBoolean(parts[5]);
                 int quantity = Integer.parseInt(parts[6]);
-                inventory.add(new InventoryItem(itemID, quantity, name, category, price, breakable, perishable));
+                switch (category) {
+                    case "grocery" -> {
+                        double weight = Double.parseDouble(parts[7]);
+                        inventory.add(new GroceryItem(itemID, quantity, name, category, price, breakable, perishable, weight));
+                    }
+                    case "electronics" ->
+                            inventory.add(new ElectronicsItem(itemID, quantity, name, category, price, breakable, perishable));
+                    case "fragile" -> {
+                        double weight = Double.parseDouble(parts[7]);
+                        inventory.add(new FragileItem(itemID, quantity, name, category, price, breakable, perishable, weight));
+                    }
+                }
+
             }
         }
         return inventory;
