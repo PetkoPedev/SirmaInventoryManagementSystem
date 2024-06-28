@@ -68,15 +68,30 @@ public class Main {
     }
 
     private static void removeItem(Scanner sc, List<InventoryItem> inventoryItems) {
-
+        System.out.println("List of items: ");
+        for (int i = 0; i < inventoryItems.size(); i++) {
+            System.out.print(i + 1 + " " + inventoryItems.get(i));
+        }
+        System.out.print("Select an item to remove: ");
+        int index = Integer.parseInt(sc.nextLine());
+        if(index > 0){
+            inventoryItems.remove(index - 1);
+        }
     }
 
     private static void getAllItems(Scanner sc, List<InventoryItem> inventoryItems) {
-
+        if(inventoryItems.isEmpty()){
+            System.out.println("Inventory is empty.");
+        }
+        else{
+            for(InventoryItem item : inventoryItems){
+                item.getDescription();
+            }
+        }
     }
 
     private static void changeCategory(Scanner sc, List<InventoryItem> inventoryItems) {
-
+        
     }
 
     private static void orderItem(Scanner sc, List<InventoryItem> inventoryItems) {
