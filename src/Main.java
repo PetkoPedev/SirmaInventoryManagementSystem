@@ -20,8 +20,8 @@ public class Main {
             switch (choice){
                 case 1 -> addItem(sc, inventoryItems);
                 case 2 -> removeItem(sc, inventoryItems);
-                case 3 -> getAllItems(sc, inventoryItems);
-                case 4 -> changeCategory(sc, inventoryItems);
+                case 3 -> getAllItems(inventoryItems);
+                case 4 -> categorizeItem(sc, inventoryItems);
                 case 5 -> orderItem(sc, inventoryItems);
                 case 6 -> saveToFile(sc, inventoryItems);
                 case 7 -> loadFromFile(sc, inventoryItems);
@@ -70,16 +70,16 @@ public class Main {
     private static void removeItem(Scanner sc, List<InventoryItem> inventoryItems) {
         System.out.println("List of items: ");
         for (int i = 0; i < inventoryItems.size(); i++) {
-            System.out.print(i + 1 + " " + inventoryItems.get(i));
+            System.out.print(inventoryItems.get(i));
         }
         System.out.print("Select an item to remove: ");
         int index = Integer.parseInt(sc.nextLine());
         if(index > 0){
-            inventoryItems.remove(index - 1);
+            inventoryItems.remove(index);
         }
     }
 
-    private static void getAllItems(Scanner sc, List<InventoryItem> inventoryItems) {
+    private static void getAllItems(List<InventoryItem> inventoryItems) {
         if(inventoryItems.isEmpty()){
             System.out.println("Inventory is empty.");
         }
@@ -90,8 +90,18 @@ public class Main {
         }
     }
 
-    private static void changeCategory(Scanner sc, List<InventoryItem> inventoryItems) {
-        
+    private static void categorizeItem(Scanner sc, List<InventoryItem> inventoryItems) {
+        System.out.print("Enter id of an item to categorize: ");
+        int itemId = Integer.parseInt(sc.nextLine());
+        System.out.print("Enter new category: ");
+        String category = sc.nextLine();
+        for(InventoryItem item : inventoryItems){
+            if(item.getItemId() == itemId){
+                item.setCategory(category);
+                System.out.println("Item categorized.");
+                return;
+            }
+        }
     }
 
     private static void orderItem(Scanner sc, List<InventoryItem> inventoryItems) {
