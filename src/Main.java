@@ -91,16 +91,20 @@ public class Main {
     }
 
     private static void categorizeItem(Scanner sc, List<InventoryItem> inventoryItems) {
-        System.out.print("Enter id of an item to categorize: ");
-        int itemId = Integer.parseInt(sc.nextLine());
-        System.out.print("Enter new category: ");
-        String category = sc.nextLine();
-        for(InventoryItem item : inventoryItems){
-            if(item.getItemId() == itemId){
-                item.setCategory(category);
-                System.out.println("Item categorized.");
-                return;
+        try{
+            System.out.print("Enter id of an item to categorize: ");
+            int itemId = Integer.parseInt(sc.nextLine());
+            System.out.print("Enter new category: ");
+            String category = sc.nextLine();
+            for(InventoryItem item : inventoryItems){
+                if(item.getItemId() == itemId){
+                    item.setCategory(category);
+                    System.out.println("Item categorized.");
+                    return;
+                }
             }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please try again.");
         }
     }
 
