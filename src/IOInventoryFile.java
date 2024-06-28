@@ -13,7 +13,7 @@ public class IOInventoryFile {
         }
     }
 
-    public List<InventoryItem> loadInventory(String filename) throws IOException {
+    public static List<InventoryItem> loadInventory(String filename) throws IOException {
         List<InventoryItem> inventory = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;

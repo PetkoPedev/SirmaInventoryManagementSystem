@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -109,15 +110,69 @@ public class Main {
     }
 
     private static void orderItem(Scanner sc, List<InventoryItem> inventoryItems) {
+        System.out.print("Select payment method (cash/credit): ");
+        String paymentMethod = sc.nextLine();
+        Order order = new Order(paymentMethod);
 
+        while (true){
+            try{
+                System.out.print("Enter item ID to add to order (or 'done' to finish): ");
+                String input = sc.nextLine();
+                if (input.equalsIgnoreCase("done")) {
+                    break;
+                }
+
+                int itemId = Integer.parseInt(sc.nextLine());
+                System.out.print("Enter quantity: ");
+                int quantity = Integer.parseInt(sc.nextLine());
+                boolean itemFound = false;
+                for(InventoryItem item : inventoryItems){
+                    if(item.getItemId() == itemId){
+                        if(item.getQuantity() >= quantity){
+                            order.addItem(item, quantity);
+                            itemFound = true;
+                            System.out.println("Item added to order");
+                        }
+                        else{
+                            System.out.println("Insufficient quantity in stock.");
+                        }
+                        break;
+                    }
+                }
+
+                if (!itemFound) {
+                    System.out.println("Item not found.");
+                }
+            } catch (NumberFormatException e){
+                System.out.println("Invalid input. Please try again.");
+            }
+        }
+
+        double total = order.calculateTotal();
+        System.out.println("Total order cost: $" + total);
+        order.placeOrder();
     }
 
     private static void saveToFile(Scanner sc, List<InventoryItem> inventoryItems) {
-
+        System.out.print("Enter filename to save inventory: ");
+        String filename = sc.nextLine();
+        try {
+            IOInventoryFile.saveInventory(inventoryItems, filename);
+            System.out.println("Inventory saved to " + filename);
+        } catch (IOException e) {
+            System.out.println("Error saving inventory to file: " + e.getMessage());
+        }
     }
 
     private static void loadFromFile(Scanner sc,List<InventoryItem> inventoryItems) {
-
+        System.out.print("Enter filename to load inventory: ");
+        String filename = sc.nextLine();
+        try {
+            inventoryItems = IOInventoryFile.loadInventory(filename);
+            System.out.println("Inventory loaded from " + filename);
+        } catch (IOException e) {
+            System.out.println("Error loading inventory from file: " + e.getMessage());
+        }
     }
 
     private static void menu() {
